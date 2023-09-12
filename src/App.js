@@ -2,6 +2,7 @@ import { RingLoader } from 'react-spinners';
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
+import Background from './assets/1.jpg'
 
 
 function App() {
@@ -119,8 +120,8 @@ function App() {
 
   const getFantasyDeadline = () => {
     const index = fantasy.events.findIndex((gameweek) => gameweek.finished === false);
-    const deadline = fantasy.events[index].deadline_time;
-    return deadline;
+    const deadline = new Date(fantasy.events[index].deadline_time);
+    return deadline.toLocaleDateString() + " " + deadline.toLocaleTimeString();
   }
 
   return (
@@ -129,10 +130,12 @@ function App() {
         isLoading ? 
           <RingLoader size={50} color='#f1f3f4' loading={isLoading}/>
         :
+        <div>
+          <img className='background' src={Background}></img>
         <div className='app-container'>
           <div className='div1'>
-            <h2>{today.toString().slice(0,15)}</h2>
-            <h2>{today.toString().slice(16,21)}</h2>
+            <h2 className='orbitron'>{today.toString().slice(0,15)}</h2>
+            <h2 className='digital' style={{fontSize:"80px"}}>{today.toString().slice(16,21)}</h2>
           </div>
           <div className='div2'>
           </div>
@@ -141,8 +144,8 @@ function App() {
               {quotes.map((quote) => {
                 return (
                   <div className='quote-container'>
-                    <h5>{quote.content}</h5>
-                    <h6>{quote.author}</h6>
+                    <h5 style={{fontStyle:"italic",fontSize:"20px",margin:"0"}}>{quote.content}</h5>
+                    <h6 style={{fontStyle:"italic",fontSize:"15px",marginTop:"5px",marginBottom:"5px",textDecoration:"overline"}}>{quote.author}</h6>
                   </div>
                 )
               })}
@@ -158,7 +161,7 @@ function App() {
           <div className='div7'>
           </div>
           <div className='div8'>
-            <h2>{getFantasyDeadline()}</h2>
+            <h2 className='digital' style={{fontSize:"40px"}}>{getFantasyDeadline()}</h2>
             
           </div>
           <div className='div9'>
@@ -169,10 +172,13 @@ function App() {
             })}
           </div>
           <div className='div10'>
-            <h4>{definition[0].word}</h4>
-            <h6>{definition[0].meanings[0].definitions[0].definition}</h6>
+            <h4 style={{fontWeight:"bolder",margin:"0",fontSize:"30px",textDecoration:"underline"}}>{definition[0].word}</h4>
+            <h4 style={{fontWeight:"bold",margin:"0",fontSize:"15px",fontStyle:"italic"}}>{definition[0].phonetic}</h4>
+            <h4 style={{fontWeight:"bold",margin:"0",fontSize:"10px"}}>{definition[0].meanings[0].partOfSpeech}</h4>
+            <h6 style={{fontWeight:"bold",margin:"0",fontSize:"15px",fontStyle:"italic"}}>{definition[0].meanings[0].definitions[0].definition}</h6>
           </div>
           
+        </div>
         </div>
 
 
